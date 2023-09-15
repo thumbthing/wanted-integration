@@ -1,5 +1,11 @@
+import Header from '@/components/header/Header';
 import React from 'react';
 
 export default function Home() {
-  return <div>skeleton package</div>;
+  return (
+    <>
+      <Header />
+      <div>main page</div>
+    </>
+  );
 }
