@@ -1,163 +1,79 @@
-# Create Next App Skeleton Package (Typescript)
+# Wanted-Intetegraion
+
+원티드 프론드앤드 인턴쉽 중 진행한 프로젝트들을 하나의 프로젝트로 제작
 
 ---
-
-## 프로젝트 생성 날짜 
-
-2023/09/14
 
 ## 목적
 
-create next app 프로젝트 진행 전 사용할 초기 세팅 프로젝트
-
-## 패키지 업데이트 여부
-
-2023/09/14
+CRA로 진행된 프로젝트를 Next.js로 Refactoring
 
 ---
 
-## 세팅 목록
+## SignIn / SignUp / Todo List
 
-1. Typescript
-2. eslint / prettier
-3. 라이브러리
+### 필수 기능
 
+1. 회원가입 / 로그인  
+  1-1 회원가입  
+  1-2 로그인
 
-### package.json
-
-```javascript
-{
-  "name": "next-skeleton-package",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "lint:fix": "eslint --fix './*.{ts,tsx,js,jsx}'",
-    "prettier": "prettier --write --config ./.prettierrc.json './*.{ts,tsx}'",
-    "postinstall": "husky install",
-    "format": "prettier --cache --write .",
-    "prepare": "husky install"
-  },
-  "dependencies": {
-    "@types/node": "20.6.0",
-    "@types/react": "18.2.21",
-    "@types/react-dom": "18.2.7",
-    "axios": "^1.5.0",
-    "eslint": "^8.49.0",
-    "eslint-config-next": "13.4.19",
-    "next": "13.4.19",
-    "react": "18.2.0",
-    "react-dom": "18.2.0",
-    "styled-components": "^6.0.8",
-    "typescript": "5.2.2"
-  },
-  "devDependencies": {
-    "@next/eslint-plugin-next": "^13.4.19",
-    "@typescript-eslint/eslint-plugin": "^6.7.0",
-    "@typescript-eslint/parser": "^6.7.0",
-    "eslint-config-airbnb": "^19.0.4",
-    "eslint-config-airbnb-typescript": "^17.1.0",
-    "eslint-config-prettier": "^9.0.0",
-    "eslint-plugin-import": "^2.28.1",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
-    "eslint-plugin-prettier": "^5.0.0",
-    "eslint-plugin-react": "^7.33.2",
-    "eslint-plugin-react-hooks": "^4.6.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^14.0.1",
-    "prettier": "^3.0.3"
-  },
-  "lint-staged": {
-    "*.{ts,tsx}": [
-      "prettier --write",
-      "eslint --fix"
-    ]
-  }
-}
-```
-
-#### dependecies
-
-- axios
-- styled-components
-
-#### devDependencies
-
-- husky
-- eslint
-- prettier
+2. Todo List  
+  2-1 Create  
+  2-2 Read  
+  2-3 Update  
+  2-4 Delete  
 
 ---
 
-### eslint, prettier
+## React Issue
 
-```javascript
-// .eslintrc.json
-{
-  "env": {
-    "browser": true,
-    "es2021": true,
-    "node": true
-  },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "next/core-web-vitals",
-    "airbnb",
-    "airbnb/hooks",
-    "airbnb-typescript",
-    "prettier"
-  ],
-  "overrides": [],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaVersion": "latest",
-    "sourceType": "module",
-    "project": ["./tsconfig.json"]
-  },
-  "plugins": ["react", "@typescript-eslint"],
-  "rules": {
-    "react/react-in-jsx-scope": "off",
-    "react/jsx-props-no-spreading": "off"
-  }
-}
-```
+### 필수 기능
 
-```javascript
-// .prettierrc.json
-{
-  "singleQuote": true,
-  "parser": "typescript",
-  "semi": true,
-  "useTabs": false,
-  "printWidth": 120,
-  "tabWidth": 2
-}
-```
+1. Issue 목록 화면  
+  1-1 open 상태의 이슈 중 코멘트가 많은 순으로 정렬  
+  1-2 이슈번호, 이슈제목, 작성자, 작성일, 코멘트 수 표시  
+  1-3 5번쨰 cell 마다 wanted 이미지 출력, 사이트로 이동  
+  1-4 화면 아래로 스크롤 시 이슈 목록 추가 로딩 (infinite 스크롤)
+2. Issue 상세 화면  
+  2-1 번호, 제목, 작성자, 작성일, 코멘트 수, 작성자 프로필 이미지, 본문 표시  
+3. 공통 헤더  
+  3-1 두 페이지 공통 헤더 공유  
+  3-2 Organization Name / Repository Name 표시
 
 ---
 
-### husky
+## Clinical-trials
 
-```shell
-# pre-commit
+### 필수 기능
 
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+1. 질환명 검색시 API 호출 통해서 검색어 추천 기능 구현  
+  1-1 검색어 없을 시 '검색어 없음' 표출
+2. API 호출별로 로컬 캐싱 구현  
+  2-1 캐싱 기능을 제공하는 라이브러리 사용 금지 (React-query)등
+  2-2 캐싱을 어떻게 기술했는지 README에 기술
+  2-3 expire time을 구현할 경우 가산점
+3. 입력마다 API 호출을 하지 않도록 API 호출 횟수를 줄이는 전략 수립 및 실행
+4. API 호출마다 `console.info` 출력을 통해 콘솔창에 API 호출 횟수 확인이 가능하도록 설정
+5. 키보드만으로 추천 검색어들로 이동 가능하도록 수현
 
-yarn run format
-yarn lint-staged
-```
 
-```shell
-# pre-push
+---
 
-#!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+## Mock Data Graph
 
-yarn run lint
-```
+### 필수 기능
+
+1. 시계열 차트 만들기
+    - 주어진 JSON 데이터의 `key`값(시간)을 기반으로 시계열 차트를 만들어주세요
+    - 하나의 차트안에 Area 형태의 그래프와 Bar 형태의 그래프가 모두 존재하는 복합 그래프로 만들어주세요
+    - Area 그래프의 기준값은 `value_area` 값을 이용해주세요
+    - Bar 그래프의 기준값은 `value_bar` 값을 이용해주세요
+    - 차트의 Y축에 대략적인 수치를 표현해주세요(예시 이미지 참고)
+2. 호버 기능 구현
+    - 특정 데이터 구역에 마우스 호버시 `id, value_area, value_bar` 데이터를 툴팁 형태로 제공해주세요
+3. 필터링 기능 구현
+    - 필터링 기능을 구현해주세요, 필터링은 특정 데이터 구역을 하이라이트 하는 방식으로 구현해주세요
+    - 필터링 기능은 버튼 형태로 ID값(지역이름)을 이용해주세요
+    - 필터링 시 버튼에서 선택한 ID값과 동일한 ID값을 가진 데이터 구역만 하이라이트 처리를 해주세요
+    - 특정 데이터 구역을 클릭 시에도 필터링 기능과 동일한 형태로 동일한 ID값을 가진 데이터 구역을 하이라이트해주세요
