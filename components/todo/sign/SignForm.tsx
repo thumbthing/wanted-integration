@@ -1,7 +1,11 @@
+import authService from '@/api/auth/authApiService';
+import { addToken } from '@/features/todo/tokenSlicer';
 import { checkEmailValid, checkPasswordValid } from '@/util/todo/checkInputValid';
 import pathCheck from '@/util/todo/pathCheck';
 import { usePathname } from 'next/navigation';
+import { useRouter } from 'next/router';
 import { ChangeEvent, useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
 export default function SignForm() {
   const [email, setEmail] = useState({
@@ -12,38 +16,65 @@ export default function SignForm() {
     input: '',
     isValid: false,
   });
+  const [buttonStatus, setButtonStatus] = useState(true);
 
-  const handleEmailInput = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    const isEmailValid = checkEmailValid(inputValue);
-
-    setEmail({
-      input: inputValue,
-      isValid: isEmailValid,
-    });
-  }, []);
-
-  const handlePasswordInput = useCallback((event: ChangeEvent<HTMLInputElement>) => {
-    const inputValue = event.target.value;
-    const isPasswordValid = checkPasswordValid(inputValue);
-
-    setPassword({
-      input: inputValue,
-      isValid: isPasswordValid,
-    });
-  }, []);
-
-  const signIn = () => {
-    console.log('sign in');
-  };
-
-  const signUp = () => {
-    console.log('sign up');
-  };
+  const router = useRouter();
 
   const pathName = usePathname();
-
   const pageName = pathCheck(pathName);
+
+  const dispatch = useDispatch();
+
+  const handleButtonStatus = useCallback((emailValid: boolean, passwordValid: boolean) => {
+    const isButtonActive = !(emailValid && passwordValid);
+    setButtonStatus(isButtonActive);
+  }, []);
+
+  const handleEmailInput = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const inputValue = event.target.value;
+      const isEmailValid = checkEmailValid(inputValue);
+
+      handleButtonStatus(isEmailValid, password.isValid);
+      setEmail({
+        input: inputValue,
+        isValid: isEmailValid,
+      });
+    },
+    [handleButtonStatus, password],
+  );
+
+  const handlePasswordInput = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const inputValue = event.target.value;
+      const isPasswordValid = checkPasswordValid(inputValue);
+
+      handleButtonStatus(email.isValid, isPasswordValid);
+      setPassword({
+        input: inputValue,
+        isValid: isPasswordValid,
+      });
+    },
+    [handleButtonStatus, email],
+  );
+
+  const handleAuthentication = async (emailValue: string, passwordValue: string, path: string | null) => {
+    try {
+      const endPoint = path?.split('/')[2];
+      const response = await authService({ email: emailValue, password: passwordValue, endPoint });
+      const statusCode = response?.status;
+      if (statusCode === 201) {
+        router.push('/todo/signin');
+      }
+      if (statusCode === 200) {
+        const token = response?.data;
+        dispatch(addToken(token));
+        router.replace('/todo');
+      }
+    } catch (error) {
+      alert('fail to authorize');
+    }
+  };
 
   return (
     <div>
@@ -61,11 +92,12 @@ export default function SignForm() {
         </div>
       </form>
       <div>
-        <button type="button" onClick={signIn}>
-          로그인
-        </button>
-        <button type="button" onClick={signUp}>
-          회원가입
+        <button
+          type="button"
+          onClick={() => handleAuthentication(email.input, password.input, pathName)}
+          disabled={buttonStatus}
+        >
+          {pageName}
         </button>
       </div>
     </div>

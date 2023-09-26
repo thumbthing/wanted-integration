@@ -6,6 +6,6 @@ export const checkEmailValid = (input: string) => {
 
 export const checkPasswordValid = (input: string) => {
   const passwordLength = 8;
-  const isValid = input.length > passwordLength;
+  const isValid = input.length >= passwordLength;
   return isValid;
 };
