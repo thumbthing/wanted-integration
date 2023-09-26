@@ -1,10 +1,5 @@
 export type TokenType = {
-  access_token: string;
-};
-
-export type InputType = {
-  email: string;
-  password: string;
+  accessToken: string;
 };
 
 export interface TodoType {
@@ -14,8 +9,8 @@ export interface TodoType {
   userId: number;
 }
 
-export interface TodoContextType {
-  access_token: string;
+export interface TodoPropsType {
+  accessToken: string;
   todo: TodoType;
   todoList: TodoType[];
 }
