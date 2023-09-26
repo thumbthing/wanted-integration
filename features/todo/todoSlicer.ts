@@ -50,6 +50,6 @@ export const todoSlice = createSlice({
   },
 });
 
-export const { addToken, deleteToken } = todoSlice.actions;
+export const { addToken, deleteToken, getTodoList, addTodo, updataTodo, deleteTodo } = todoSlice.actions;
 
 export default todoSlice.reducer;
