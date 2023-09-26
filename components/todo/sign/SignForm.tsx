@@ -1,5 +1,5 @@
 import authService from '@/api/auth/authApiService';
-import { addToken } from '@/features/todo/tokenSlicer';
+import { addToken } from '@/features/todo/todoSlicer';
 import { checkEmailValid, checkPasswordValid } from '@/util/todo/checkInputValid';
 import pathCheck from '@/util/todo/pathCheck';
 import { usePathname } from 'next/navigation';
@@ -67,9 +67,10 @@ export default function SignForm() {
         router.push('/todo/signin');
       }
       if (statusCode === 200) {
-        const token = response?.data;
+        const token = response?.data.access_token;
+        localStorage.setItem('access_token', token);
         dispatch(addToken(token));
-        router.replace('/todo');
+        router.replace('/todo/mytodo');
       }
     } catch (error) {
       alert('fail to authorize');
