@@ -1,9 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-import tokenReducer from '../features/todo/tokenSlicer';
+import todoReducer from '../features/todo/tokenSlicer';
 
 export const todoStore = configureStore({
   reducer: {
-    token: tokenReducer,
+    todo: todoReducer,
   },
 });
 
