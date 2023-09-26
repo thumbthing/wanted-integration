@@ -1,11 +1,11 @@
 import SignForm from '@/components/todo/sign/SignForm';
-import TodoLayout from '../Todo.Layout';
+import TodoProvider from '../Todo.Provider';
 
 function SignUpPage() {
   return (
-    <TodoLayout>
+    <TodoProvider>
       <SignForm />
-    </TodoLayout>
+    </TodoProvider>
   );
 }
 
